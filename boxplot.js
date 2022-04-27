@@ -24,8 +24,8 @@ var d = [0, 4]
 
 var attribute = 'T'
 
-var margin = {top: 10, right: 30, bottom: 50, left: 100},
-    width = window.innerWidth / 2.5 - margin.left - margin.right,
+var margin = {top: 10, right: 30, bottom: 50, left: 90},
+    width = window.innerWidth / 3.5 - margin.left - margin.right,
     height = window.innerHeight - margin.top * 5 - margin.bottom;
 
 d3.select('#attribute').on('change', ()=>{
@@ -33,19 +33,20 @@ d3.select('#attribute').on('change', ()=>{
     boxplot(attribute)
 })
 
-boxplot(attribute)
+boxplot('T', 'boxplot')
+boxplot('d_mm', 'jitter')
 
 
 
-function boxplot(attribute){
-    d3.select('#boxplot').select('svg').remove();
-    d3.select('#jitter').select('svg').remove();
+function boxplot(attribute, plotDiv){
+    // d3.select('#boxplot').select('svg').remove();
+    // d3.select('#jitter').select('svg').remove();
 
     var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
     
-    var svg = d3.select("#boxplot")
+    var svg = d3.select(`#${plotDiv}`)
     .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)

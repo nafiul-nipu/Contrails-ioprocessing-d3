@@ -2,8 +2,8 @@
 var iceD = [7000, 24472]
 var totalD = [0, 110000]
 
-var margin = {top: 10, right: 30, bottom: 50, left: 100},
-    width = window.innerWidth / 2.5 - margin.left - margin.right,
+var margin = {top: 10, right: 30, bottom: 50, left: 90},
+    width = window.innerWidth / 3.5 - margin.left - margin.right,
     height = window.innerHeight - margin.top * 5 - margin.bottom;
 
 
