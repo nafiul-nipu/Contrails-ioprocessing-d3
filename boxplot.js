@@ -23,7 +23,7 @@ var d = [0, 4]
 var attribute = 'T'
 
 var margin = {top: 10, right: 30, bottom: 50, left: 100},
-    width = window.innerWidth / 2 - margin.left - margin.right,
+    width = window.innerWidth / 3 - margin.left - margin.right,
     height = window.innerHeight - margin.top * 5 - margin.bottom;
 
 d3.select('#attribute').on('change', ()=>{
@@ -31,10 +31,13 @@ d3.select('#attribute').on('change', ()=>{
     boxplot(attribute)
 })
 
+boxplot(attribute)
+
 
 
 function boxplot(attribute){
     d3.select('#boxplot').select('svg').remove();
+    d3.select('#jitter').select('svg').remove();
 
     var div = d3.select("body").append("div")
     .attr("class", "tooltip")
@@ -48,9 +51,17 @@ function boxplot(attribute){
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
+    // var jitter = d3.select("#jitter")
+    // .append("svg")
+    //     .attr("width", width + margin.left + margin.right)
+    //     .attr("height", height + margin.top + margin.bottom)
+    // .append("g")
+    //     .attr("transform",
+    //         "translate(" + margin.left + "," + margin.top + ")");
+
     // Read the data and compute summary statistics for each specie
     d3.csv("data/ioData.csv").then(function(data) {
-        // console.log(data)
+        console.log(data)
 
         var sumstat = d3.rollup(data, (v) => {
             // console.log(v)
@@ -81,26 +92,50 @@ function boxplot(attribute){
         .call(d3.axisLeft(y).tickSize(0))
         .select(".domain").remove()
 
+        // jitter.append("g")
+        // .call(d3.axisLeft(y).tickSize(0))
+        // .select(".domain").remove()
+
     // Show the X scale
     var x = d3.scaleLinear()
         .domain(attribute == 'T' ? t : d)
         .range([0, width])
+
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x).ticks(5))
-        .select(".domain").remove()
+        // .select(".domain").remove()
+
+      // jitter.append("g")
+      //   .attr("transform", "translate(0," + height + ")")
+      //   .call(d3.axisBottom(x).ticks(5))
 
     // Color scale
     var myColor = d3.scaleSequential()
         .interpolator(d3.interpolateInferno)
         .domain([4,8])
 
+  //   var jitterWidth = y.bandwidth()
+
+  // jitter
+  //   .selectAll("indPoints")
+  //   .data(data)
+  //   .enter()
+  //   .append("circle")
+  //     .attr("cx", function(d){ return(x(d[attribute]))})
+  //     .attr("cy", function(d){ return( y(d.name) + (y.bandwidth()/2) - jitterWidth/2 + Math.random()*jitterWidth )})
+  //     .attr("r", 0.5)
+  //     .style("fill", function(d){ return(myColor(+d[attribute])) })
+      // .attr("stroke", "black")
+
+
+
     // Add X axis label:
     svg.append("text")
         .attr("text-anchor", "middle")
         .attr("x", 3* margin.left + margin.right)
         .attr("y", height + margin.top + 30)
-        .text("Temperature");
+        .text(attribute);
 
     // Show the main vertical line
     svg
@@ -277,6 +312,6 @@ function boxplot(attribute){
 
 }
 
-boxplot(attribute)
+
 
 
