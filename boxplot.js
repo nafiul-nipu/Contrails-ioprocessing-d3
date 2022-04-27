@@ -1,4 +1,5 @@
-var domain = ['3-28-22_210.csv',
+var domain = [
+'3-28-22_210.csv',
 '3-28-22_211.csv',
 '3-28-22_212.csv',
 '3-28-22_213.csv',
@@ -15,7 +16,8 @@ var domain = ['3-28-22_210.csv',
 'newData_216.csv',
 'newData_217.csv',
 'newData_218.csv',
-'newData_219.csv']
+'newData_219.csv'
+]
 
 var t = [150, 550]
 var d = [0, 4]
@@ -23,7 +25,7 @@ var d = [0, 4]
 var attribute = 'T'
 
 var margin = {top: 10, right: 30, bottom: 50, left: 100},
-    width = window.innerWidth / 3 - margin.left - margin.right,
+    width = window.innerWidth / 2.5 - margin.left - margin.right,
     height = window.innerHeight - margin.top * 5 - margin.bottom;
 
 d3.select('#attribute').on('change', ()=>{
@@ -61,7 +63,7 @@ function boxplot(attribute){
 
     // Read the data and compute summary statistics for each specie
     d3.csv("data/ioData.csv").then(function(data) {
-        console.log(data)
+        // console.log(data)
 
         var sumstat = d3.rollup(data, (v) => {
             // console.log(v)
@@ -81,11 +83,11 @@ function boxplot(attribute){
 
         }, d => d.name)
 
-        console.log(sumstat)
+        // console.log(sumstat)
 
     // Show the Y scale
     var y = d3.scaleBand()
-        .range([ height, 0 ])
+        .range([ 0, height ])
         .domain(domain)
         .padding(.4);
     svg.append("g")
@@ -133,7 +135,7 @@ function boxplot(attribute){
     // Add X axis label:
     svg.append("text")
         .attr("text-anchor", "middle")
-        .attr("x", 3* margin.left + margin.right)
+        .attr("x", 2.5 * margin.left + margin.right)
         .attr("y", height + margin.top + 30)
         .text(attribute);
 
@@ -157,7 +159,9 @@ function boxplot(attribute){
             div.transition()
               .duration(200)
               .style("opacity", .9);
+              
             div.html(`
+            Name: ${d[0]} <br/>
             Min : ${d[1].min} <br/>
             Q1: ${d[1].q1} <br/>
             Median: ${d[1].median} <br/>
@@ -185,13 +189,14 @@ function boxplot(attribute){
             .attr("y", function(d) { return y(d[0]); })
             .attr("height", y.bandwidth() )
             .attr("stroke", "black")
-            .style("fill", "#69b3a2")
+            .style("fill", "#1b9e77")
             .style("opacity", 0.3)
             .on("mouseover", function(event,d) {
                 div.transition()
                   .duration(200)
                   .style("opacity", .9);
                 div.html(`
+                Name: ${d[0]} <br/>
                 Min : ${d[1].min} <br/>
                 Q1: ${d[1].q1} <br/>
                 Median: ${d[1].median} <br/>
@@ -224,6 +229,7 @@ function boxplot(attribute){
               .duration(200)
               .style("opacity", .9);
             div.html(`
+            Name: ${d[0]} <br/>
             Min : ${d[1].min} <br/>
             Q1: ${d[1].q1} <br/>
             Median: ${d[1].median} <br/>
@@ -258,6 +264,7 @@ function boxplot(attribute){
               .duration(200)
               .style("opacity", .9);
             div.html(`
+            Name: ${d[0]} <br/>
             Min : ${d[1].min} <br/>
             Q1: ${d[1].q1} <br/>
             Median: ${d[1].median} <br/>
@@ -292,6 +299,7 @@ function boxplot(attribute){
               .duration(200)
               .style("opacity", .9);
             div.html(`
+            Name: ${d[0]} <br/>
             Min : ${d[1].min} <br/>
             Q1: ${d[1].q1} <br/>
             Median: ${d[1].median} <br/>
